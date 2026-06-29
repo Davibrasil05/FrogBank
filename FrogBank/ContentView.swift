@@ -15,7 +15,7 @@ extension Color {
 }
 
 struct ContentView: View {
-    @StateObject var conta = ContaBancaria()
+    @StateObject var conta = ContaPoupanca()
     
     var body: some View {
         NavigationStack {
@@ -59,6 +59,10 @@ struct ContentView: View {
                         Spacer()
                         QuickActionButton(icon: "arrow.left.arrow.right.circle.fill", title: "Transferir") {
                             // TODO
+                        }
+                        Spacer()
+                        QuickActionButton(icon: "minus.circle.fill", title: "Rendimento") {
+                            conta.renderJuros()
                         }
                         Spacer()
                     }

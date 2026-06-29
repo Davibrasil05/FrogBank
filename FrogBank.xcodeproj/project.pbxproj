@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		983079292FF214A300E8FDDC /* ContaBancaria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983079282FF214A000E8FDDC /* ContaBancaria.swift */; };
+		98B912DA2FF2C47100C07DB9 /* ContaPoupanca.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B912D92FF2C46D00C07DB9 /* ContaPoupanca.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		983079282FF214A000E8FDDC /* ContaBancaria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContaBancaria.swift; sourceTree = "<group>"; };
 		98B0927B2FEF196800CA7C2F /* FrogBank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrogBank.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98B912D92FF2C46D00C07DB9 /* ContaPoupanca.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContaPoupanca.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,6 +42,7 @@
 				98B0927D2FEF196800CA7C2F /* FrogBank */,
 				98B0927C2FEF196800CA7C2F /* Products */,
 				983079282FF214A000E8FDDC /* ContaBancaria.swift */,
+				98B912D92FF2C46D00C07DB9 /* ContaPoupanca.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				983079292FF214A300E8FDDC /* ContaBancaria.swift in Sources */,
+				98B912DA2FF2C47100C07DB9 /* ContaPoupanca.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
