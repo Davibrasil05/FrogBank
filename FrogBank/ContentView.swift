@@ -15,6 +15,8 @@ extension Color {
 }
 
 struct ContentView: View {
+    @StateObject var conta = ContaBancaria()
+    
     var body: some View {
         NavigationStack {
             List {
@@ -25,7 +27,7 @@ struct ContentView: View {
                             .font(.subheadline)
                             .foregroundColor(.frogLightGreen)
                         
-                        Text("R$ 4.520,00")
+                        Text("R$ \(conta.saldo, specifier: "%.2f")")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.frogLightGreen)
@@ -47,11 +49,17 @@ struct ContentView: View {
                 Section {
                     HStack {
                         Spacer()
-                        QuickActionButton(icon: "plus.circle.fill", title: "Depositar")
+                        QuickActionButton(icon: "plus.circle.fill", title: "Depositar") {
+                            conta.depositar(valor: 100.0)
+                        }
                         Spacer()
-                        QuickActionButton(icon: "minus.circle.fill", title: "Sacar")
+                        QuickActionButton(icon: "minus.circle.fill", title: "Sacar") {
+                            conta.sacar(valor: 50.0)
+                        }
                         Spacer()
-                        QuickActionButton(icon: "arrow.left.arrow.right.circle.fill", title: "Transferir")
+                        QuickActionButton(icon: "arrow.left.arrow.right.circle.fill", title: "Transferir") {
+                            // TODO
+                        }
                         Spacer()
                     }
                     .padding(.vertical, 4)
@@ -76,11 +84,10 @@ struct ContentView: View {
 struct QuickActionButton: View {
     let icon: String
     let title: String
+    let action: () -> Void
     
     var body: some View {
-        Button(action: {
-            // Ação mockada
-        }) {
+        Button(action: action) {
             VStack(spacing: 8) {
                 Image(systemName: icon)
                     .font(.title)
