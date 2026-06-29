@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		983079292FF214A300E8FDDC /* ContaBancaria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983079282FF214A000E8FDDC /* ContaBancaria.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		983079282FF214A000E8FDDC /* ContaBancaria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContaBancaria.swift; sourceTree = "<group>"; };
 		98B0927B2FEF196800CA7C2F /* FrogBank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrogBank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -34,6 +39,7 @@
 			children = (
 				98B0927D2FEF196800CA7C2F /* FrogBank */,
 				98B0927C2FEF196800CA7C2F /* Products */,
+				983079282FF214A000E8FDDC /* ContaBancaria.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				983079292FF214A300E8FDDC /* ContaBancaria.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
