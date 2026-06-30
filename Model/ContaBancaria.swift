@@ -19,17 +19,14 @@ class ContaBancaria: ObservableObject {
     @Published var mostrarAlertaIncompleto: Bool = false
     @Published var mensagemAlerta: String = ""
     
-    // MARK: - Depositar
-    // TODO 1: Implemente a lógica da função depositar(valor: Double)
-    // Se valor > 0, adicione ao saldo
-    // Atualmente a função dispara um alerta informando que a classe está incompleta.
-    func depositar(valor: Double) {
-		if valor > 0 {
-			saldo += valor
-		} else {
-			mensagemAlerta = "Depositar: O valor deve ser maior que 0"
-		}
-    }
+	// MARK: - Depositar
+	// TODO 1: Implemente a lógica da função depositar(valor: Double)
+	// Se valor > 0, adicione ao saldo
+	// Atualmente a função dispara um alerta informando que a classe está incompleta.
+	func depositar(valor: Double) {
+		mensagemAlerta = "Depositar: Não funciona pois a classe está incompleta! Implemente o TODO 3."
+		mostrarAlertaIncompleto = true
+	}
     
     // MARK: - Sacar
     // TODO 2: Implemente a lógica da função sacar(valor: Double)
