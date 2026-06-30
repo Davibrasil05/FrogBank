@@ -18,45 +18,23 @@ struct ContentView: View {
     @StateObject var contaCorrente = ContaBancaria()
     @StateObject var contaPoupanca = ContaPoupanca()
     
-    var body: some View {
-        TabView {
-            AccountView(conta: contaCorrente, title: "Conta Corrente")
-                .tabItem {
-                    Label("Corrente", systemImage: "building.columns.fill")
-                }
-            
-            AccountView(conta: contaPoupanca, title: "Conta Poupança")
-                .tabItem {
-                    Label("Poupança", systemImage: "leaf.fill")
-                }
-        }
-        .tint(.frogDarkGreen)
-    }
-}
-
-struct AccountView: View {
-    @ObservedObject var conta: ContaBancaria
-    let title: String
-    
-    @State private var showingTransactionSheet = false
-    @State private var transactionType: TransactionType = .deposit
-    
+	
     var body: some View {
         NavigationStack {
             List {
-                // Primeira Section: Card de Saldo
+                // Primeira Section: Card de Saldo - Conta Corrente
                 Section {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Saldo Disponível")
                             .font(.subheadline)
                             .foregroundColor(.frogLightGreen)
                         
-                        Text("R$ \(conta.saldo, specifier: "%.2f")")
+                        Text("R$ \(contaCorrente.saldo, specifier: "%.2f")")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.frogLightGreen)
                         
-                        Text(title)
+                        Text("Conta Corrente")
                             .font(.caption2)
                             .fontWeight(.semibold)
                             .padding(.horizontal, 8)
@@ -69,33 +47,48 @@ struct AccountView: View {
                 }
                 .listRowBackground(Color.frogDarkGreen)
                 
-                // Segunda Section: Ações Rápidas
+                // Section: Saldo da Poupança
                 Section {
                     HStack {
-                        Spacer()
-                        QuickActionButton(icon: "plus.circle.fill", title: "Depositar") {
-                            transactionType = .deposit
-                            showingTransactionSheet = true
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Conta Poupança")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Text("R$ \(contaPoupanca.saldo, specifier: "%.2f")")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.frogDarkGreen)
                         }
-                        Spacer()
-                        QuickActionButton(icon: "minus.circle.fill", title: "Sacar") {
-                            transactionType = .withdraw
-                            showingTransactionSheet = true
-                        }
-
-                        if let poupanca = conta as? ContaPoupanca {
-                            Spacer()
-                            QuickActionButton(icon: "chart.line.uptrend.xyaxis", title: "Rendimento") {
-                                poupanca.renderJuros()
-                            }
-                        }
-                        
                         Spacer()
                     }
                     .padding(.vertical, 4)
                 }
                 
-                // Terceira Section: Extrato (Transações Recentes)
+                // Section: Ações Rápidas
+                Section {
+                    HStack {
+                        Spacer()
+                        QuickActionButton(icon: "plus.circle.fill", title: "Depositar") {
+                            contaCorrente.depositar(valor: 100.0)
+                        }
+                        Spacer()
+                        QuickActionButton(icon: "minus.circle.fill", title: "Sacar") {
+                            contaCorrente.sacar(valor: 50.0)
+                        }
+                        Spacer()
+                        QuickActionButton(icon: "arrow.left.arrow.right.circle.fill", title: "Transferir") {
+                            contaCorrente.transferir(valor: 50.0, destino: contaPoupanca)
+                        }
+                        Spacer()
+                        QuickActionButton(icon: "chart.line.uptrend.xyaxis.circle.fill", title: "Rendimento") {
+                            contaPoupanca.renderJuros()
+                        }
+                        Spacer()
+                    }
+                    .padding(.vertical, 4)
+                }
+                
+                // Section: Extrato (Transações Recentes)
                 Section(header: Text("Transações Recentes")) {
                     TransactionRow(icon: "cup.and.saucer.fill", title: "Cafeteria", amount: "- R$ 15,00", isExpense: true)
                     TransactionRow(icon: "cart.fill", title: "Supermercado", amount: "- R$ 150,00", isExpense: true)
@@ -105,8 +98,17 @@ struct AccountView: View {
             .navigationTitle("FrogBank")
             .background(Color(UIColor.systemGroupedBackground))
             .scrollContentBackground(.hidden)
-            .sheet(isPresented: $showingTransactionSheet) {
-                TransactionSheetView(conta: conta, type: transactionType)
+            // Alert para Conta Corrente - dispara quando método incompleto é chamado
+            .alert("⚠️ Classe Incompleta", isPresented: $contaCorrente.mostrarAlertaIncompleto) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(contaCorrente.mensagemAlerta)
+            }
+            // Alert para Conta Poupança - dispara quando método incompleto é chamado
+            .alert("⚠️ Classe Incompleta", isPresented: $contaPoupanca.mostrarAlertaIncompleto) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(contaPoupanca.mensagemAlerta)
             }
         }
     }
