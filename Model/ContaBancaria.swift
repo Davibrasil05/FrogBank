@@ -28,11 +28,17 @@ class ContaBancaria: ObservableObject {
     @Published var mensagemAlerta: String = ""
     
 	// MARK: - Depositar
-	// Depositar completo com validação
+	// TODO 1: Implemente a lógica da função depositar(valor: Double)
+	// Se valor > 0, adicione ao saldo
+	// Atualmente a função dispara um alerta informando que a classe está incompleta.
 	func depositar(valor: Double) {
+		
+		
+		
+		
+		//Pode apagar quando fizer o método
 		mensagemAlerta = "Depositar: Não funciona pois a classe está incompleta! Implemente o TODO 3."
 		mostrarAlertaIncompleto = true
-		
 	}
     
     // MARK: - Sacar
@@ -41,9 +47,15 @@ class ContaBancaria: ObservableObject {
     // Só saque se saldo >= valorComTaxa
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     func sacar(valor: Double) {
+		
+		
+		
+		
+		//Pode apagar quando fizer o método
         mensagemAlerta = "Sacar: Não funciona pois a classe está incompleta! Implemente o TODO 2."
 		mostrarAlertaIncompleto = true
 		
+		//Serve apenas para visualização
 		transacoes.insert(Transaction(title: "Saque", amount: valor, isExpense: true), at: 0)
 		transacoes.insert(Transaction(title: "Taxa de Saque", amount: 5.0, isExpense: true), at: 0)
     }
@@ -53,6 +65,12 @@ class ContaBancaria: ObservableObject {
     // Use sacar() desta conta e depositar() na conta destino
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     func transferir(valor: Double, destino: ContaBancaria) {
+		
+		
+		
+		
+		
+		//Pode apagar quando fizer o método
         mensagemAlerta = "Transferir: Não funciona pois a classe está incompleta! Implemente o TODO 3."
         mostrarAlertaIncompleto = true
 
