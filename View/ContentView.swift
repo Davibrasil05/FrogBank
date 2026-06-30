@@ -122,9 +122,14 @@ struct AccountView: View {
 				
 				// Terceira Section: Extrato (Transações Recentes)
 				Section(header: Text("Transações Recentes")) {
-					TransactionRow(icon: "cup.and.saucer.fill", title: "Cafeteria", amount: "- R$ 15,00", isExpense: true)
-					TransactionRow(icon: "cart.fill", title: "Supermercado", amount: "- R$ 150,00", isExpense: true)
-					TransactionRow(icon: "briefcase.fill", title: "Salário", amount: "+ R$ 5.000,00", isExpense: false)
+                    if conta.transacoes.isEmpty {
+                        Text("Nenhuma transação")
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(conta.transacoes) { t in
+                            TransactionRow(title: t.title, amount: (t.isExpense ? "- R$ " : "+ R$ ") + String(format: "%.2f", t.amount), isExpense: t.isExpense)
+                        }
+                    }
 				}
 			}
 			.navigationTitle("FrogBank")
@@ -143,44 +148,13 @@ struct AccountView: View {
 	}
 }
 
-// MARK: - Subcomponents
-
-struct QuickActionButton: View {
-	let icon: String
-	let title: String
-	let action: () -> Void
-	
-	var body: some View {
-		Button(action: action) {
-			VStack(spacing: 8) {
-				Image(systemName: icon)
-					.font(.title)
-					.foregroundColor(.frogMediumGreen)
-				
-				Text(title)
-					.font(.caption)
-					.foregroundColor(.primary)
-			}
-		}
-		.buttonStyle(.plain)
-	}
-}
-
 struct TransactionRow: View {
-	let icon: String
 	let title: String
 	let amount: String
 	let isExpense: Bool
 	
 	var body: some View {
 		HStack(spacing: 16) {
-			Image(systemName: icon)
-				.font(.title3)
-				.foregroundColor(.frogMediumGreen)
-				.frame(width: 40, height: 40)
-				.background(Color.frogMediumGreen.opacity(0.15))
-				.cornerRadius(8)
-			
 			Text(title)
 				.font(.body)
 				.foregroundColor(.primary)
