@@ -37,37 +37,30 @@ class ContaBancaria: ObservableObject {
 	}
     
     // MARK: - Sacar
-    // TODO 2: Implemente a lógica da função sacar(valor: Double)
-    // Taxa de R$5.00 por saque (valorComTaxa = valor + 5.0)
-    // Só saque se saldo >= valorComTaxa
-    // Atualmente a função dispara um alerta informando que a classe está incompleta.
+    // TODO 2: Completa
     func sacar(valor: Double) {
 		
-		var valorComTaxa: Double = valor + 5.0
+		let valorComTaxa: Double = valor + 5.0
 		
 		if saldo >= valorComTaxa {
 			saldo -= valorComTaxa
+			transacoes.insert(Transaction(title: "Saque", amount: valor, isExpense: true), at: 0)
+			transacoes.insert(Transaction(title: "Taxa de Saque", amount: 5.0, isExpense: true), at: 0)
 		}
-		
-		//Serve apenas para visualização
-		transacoes.insert(Transaction(title: "Saque", amount: valor, isExpense: true), at: 0)
-		transacoes.insert(Transaction(title: "Taxa de Saque", amount: 5.0, isExpense: true), at: 0)
     }
     
     // MARK: - Transferir
-    // TODO 3: Implemente a lógica da função transferir(valor: Double, destino: ContaBancaria)
-    // Use sacar() desta conta e depositar() na conta destino
-    // Atualmente a função dispara um alerta informando que a classe está incompleta.
+    // TODO 3: Completa
     func transferir(valor: Double, destino: ContaBancaria) {
 		
+		if valor > 0 && saldo >= valor {
+			saldo -= (valor + 5.0)
+			destino.saldo += valor
+		}
 		
-		
-		
-		
-		//Pode apagar quando fizer o método
-        mensagemAlerta = "Transferir: Não funciona pois a classe está incompleta! Implemente o TODO 3."
-        mostrarAlertaIncompleto = true
-
+		transacoes.insert(Transaction(title: "Transferência Enviada", amount: valor, isExpense: true), at: 0)
+		transacoes.insert(Transaction(title: "Taxa de Transferência", amount: 5.0, isExpense: true), at: 0)
+		destino.transacoes.insert(Transaction(title: "Transferência Recebida", amount: valor, isExpense: false), at: 0)
     }
     
 }

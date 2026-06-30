@@ -6,13 +6,14 @@
 //
 import SwiftUI
 enum TransactionType {
-    case deposit, withdraw
+    case deposit, withdraw, transfer
 }
 
 struct TransactionSheetView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var conta: ContaBancaria
     let type: TransactionType
+    var contaDestino: ContaBancaria? = nil
     
     @State private var amountString: String = ""
     
@@ -20,7 +21,7 @@ struct TransactionSheetView: View {
         NavigationStack {
             VStack(spacing: 24) {
                 VStack(spacing: 8) {
-                    Text(type == .deposit ? "Quanto você quer depositar?" : "Quanto você quer sacar?")
+                    Text(type == .deposit ? "Quanto você quer depositar?" : (type == .withdraw ? "Quanto você quer sacar?" : "Quanto você quer transferir?"))
                         .font(.headline)
                         .foregroundColor(.secondary)
                     
@@ -59,8 +60,10 @@ struct TransactionSheetView: View {
                     if let amount = parsedAmount, amount > 0 {
                         if type == .deposit {
                             conta.depositar(valor: amount)
-                        } else {
+                        } else if type == .withdraw {
                             conta.sacar(valor: amount)
+                        } else if type == .transfer, let destino = contaDestino {
+                            conta.transferir(valor: amount, destino: destino)
                         }
                         dismiss()
                     }
@@ -78,7 +81,7 @@ struct TransactionSheetView: View {
                 .padding(.bottom)
             }
             .padding(.top, 32)
-            .navigationTitle(type == .deposit ? "Depósito" : "Saque")
+            .navigationTitle(type == .deposit ? "Depósito" : (type == .withdraw ? "Saque" : "Transferência"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -99,11 +102,10 @@ struct TransactionSheetView: View {
     }
     
     private var hasInsufficientBalance: Bool {
-        guard type == .withdraw, let amount = parsedAmount, amount > 0 else { return false }
+        guard type == .withdraw || type == .transfer, let amount = parsedAmount, amount > 0 else { return false }
         if conta is ContaPoupanca {
             return amount > conta.saldo
         } else {
-            // Conta Corrente (ContaBancaria base) tem taxa de 5.0
             return amount > (conta.saldo - 5.0)
         }
     }

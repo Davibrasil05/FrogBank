@@ -41,6 +41,7 @@ struct AccountView: View {
 	
 	@State private var showingTransactionSheet = false
 	@State private var transactionType: TransactionType = .deposit
+	@State private var activeContaDestino: ContaBancaria? = nil
 	
 	var body: some View {
 		NavigationStack {
@@ -75,36 +76,21 @@ struct AccountView: View {
 					HStack {
 						Spacer()
 						QuickActionButton(icon: "plus.circle.fill", title: "Depositar") {
-							// Testa se o método está implementado
-							conta.mostrarAlertaIncompleto = false
-							conta.depositar(valor: 0)
-							if !conta.mostrarAlertaIncompleto {
-								// Método implementado! Abre o sheet
-								transactionType = .deposit
-								showingTransactionSheet = true
-							}
-							// Se mostrarAlertaIncompleto == true, o .alert exibe automaticamente
+							transactionType = .deposit
+							showingTransactionSheet = true
 						}
 						Spacer()
 						QuickActionButton(icon: "minus.circle.fill", title: "Sacar") {
-							// Testa se o método está implementado
-							conta.mostrarAlertaIncompleto = false
-							conta.sacar(valor: 0)
-							if !conta.mostrarAlertaIncompleto {
-								// Método implementado! Abre o sheet
-								transactionType = .withdraw
-								showingTransactionSheet = true
-							}
+							transactionType = .withdraw
+							showingTransactionSheet = true
 						}
 
 						if let destino = contaDestino {
 							Spacer()
 							QuickActionButton(icon: "arrow.left.arrow.right.circle.fill", title: "Transferir") {
-								conta.mostrarAlertaIncompleto = false
-								conta.transferir(valor: 0, destino: destino)
-								if !conta.mostrarAlertaIncompleto {
-									// TODO: Abrir sheet de transferência quando implementado
-								}
+								activeContaDestino = destino
+								transactionType = .transfer
+								showingTransactionSheet = true
 							}
 						}
 
@@ -136,7 +122,7 @@ struct AccountView: View {
 			.background(Color(UIColor.systemGroupedBackground))
 			.scrollContentBackground(.hidden)
 			.sheet(isPresented: $showingTransactionSheet) {
-				TransactionSheetView(conta: conta, type: transactionType)
+				TransactionSheetView(conta: conta, type: transactionType, contaDestino: activeContaDestino)
 			}
 			// Alert - dispara quando método incompleto é chamado
 			.alert("⚠️ Classe Incompleta", isPresented: $conta.mostrarAlertaIncompleto) {
