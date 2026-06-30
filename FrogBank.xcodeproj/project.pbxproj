@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		983079292FF214A300E8FDDC /* ContaBancaria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983079282FF214A000E8FDDC /* ContaBancaria.swift */; };
+		989BD4EC2FF439F600514036 /* TransactionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989BD4EB2FF439F100514036 /* TransactionSheetView.swift */; };
 		98B912DA2FF2C47100C07DB9 /* ContaPoupanca.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B912D92FF2C46D00C07DB9 /* ContaPoupanca.swift */; };
 		98F0E86D2FF34A290005DE8C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F0E86A2FF34A290005DE8C /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		983079282FF214A000E8FDDC /* ContaBancaria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContaBancaria.swift; sourceTree = "<group>"; };
+		989BD4EB2FF439F100514036 /* TransactionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSheetView.swift; sourceTree = "<group>"; };
 		98B0927B2FEF196800CA7C2F /* FrogBank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrogBank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B912D92FF2C46D00C07DB9 /* ContaPoupanca.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContaPoupanca.swift; sourceTree = "<group>"; };
 		98F0E86A2FF34A290005DE8C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 		98F0E8702FF34B080005DE8C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				989BD4EB2FF439F100514036 /* TransactionSheetView.swift */,
 				98F0E86A2FF34A290005DE8C /* ContentView.swift */,
 			);
 			path = View;
@@ -149,6 +152,7 @@
 			files = (
 				983079292FF214A300E8FDDC /* ContaBancaria.swift in Sources */,
 				98F0E86D2FF34A290005DE8C /* ContentView.swift in Sources */,
+				989BD4EC2FF439F600514036 /* TransactionSheetView.swift in Sources */,
 				98B912DA2FF2C47100C07DB9 /* ContaPoupanca.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
