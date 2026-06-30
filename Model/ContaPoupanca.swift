@@ -9,17 +9,27 @@ import Foundation
 import Combine
 
 class ContaPoupanca: ContaBancaria {
-    func renderJuros(){
-        let rendimento = saldo * 0.01
-        depositar(valor: rendimento)
+    
+    override init() {
+        super.init()
+        self.nome = "Conta Poupança"
     }
     
-    @discardableResult
-    override func sacar(valor: Double) -> Bool {
-        if saldo >= valor {
-            saldo -= valor
-            return true
-        }
-        return false
+    // MARK: - Render Juros
+    // TODO 4: Implemente a lógica da função renderJuros()
+    // rendimento = saldo * 0.01, depois deposite o rendimento
+    // Atualmente a função dispara um alerta informando que a classe está incompleta.
+    func renderJuros() {
+        mensagemAlerta = "Render Juros: Não funciona pois a classe está incompleta! Implemente o TODO 4."
+        mostrarAlertaIncompleto = true
+    }
+    
+    // MARK: - Sacar (Override - Polimorfismo)
+    // TODO 5: Faça override da função sacar(valor: Double)
+    // Na poupança NÃO tem taxa. Só verifique se saldo >= valor
+    // Atualmente a função dispara um alerta informando que a classe está incompleta.
+    override func sacar(valor: Double) {
+        mensagemAlerta = "Sacar (Poupança): Não funciona pois a classe está incompleta! Implemente o TODO 5."
+        mostrarAlertaIncompleto = true
     }
 }
