@@ -13,4 +13,10 @@ class ContaPoupanca: ContaBancaria {
         let rendimento = saldo * 0.01
         depositar(valor: rendimento)
     }
+    
+    override func sacar(valor: Double) {
+        if saldo >= valor {
+            saldo -= valor
+        }
+    }
 }
