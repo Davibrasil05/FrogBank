@@ -8,8 +8,6 @@
 import Foundation
 import Combine
 
-// TODO 6: A classe ContaPoupanca já herda de ContaBancaria (Herança - pilar da POO)
-// Agora implemente os métodos abaixo para que a poupança funcione de verdade.
 class ContaPoupanca: ContaBancaria {
     
     override init() {
@@ -18,20 +16,20 @@ class ContaPoupanca: ContaBancaria {
     }
     
     // MARK: - Render Juros
-    // TODO 7: Implemente a lógica da função renderJuros()
+    // TODO 4: Implemente a lógica da função renderJuros()
     // rendimento = saldo * 0.01, depois deposite o rendimento
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     func renderJuros() {
-        mensagemAlerta = "Render Juros: Não funciona pois a classe está incompleta! Implemente o TODO 7."
+        mensagemAlerta = "Render Juros: Não funciona pois a classe está incompleta! Implemente o TODO 4."
         mostrarAlertaIncompleto = true
     }
     
     // MARK: - Sacar (Override - Polimorfismo)
-    // TODO 8: Faça override da função sacar(valor: Double)
+    // TODO 5: Faça override da função sacar(valor: Double)
     // Na poupança NÃO tem taxa. Só verifique se saldo >= valor
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     override func sacar(valor: Double) {
-        mensagemAlerta = "Sacar (Poupança): Não funciona pois a classe está incompleta! Implemente o TODO 8."
+        mensagemAlerta = "Sacar (Poupança): Não funciona pois a classe está incompleta! Implemente o TODO 5."
         mostrarAlertaIncompleto = true
     }
 }
