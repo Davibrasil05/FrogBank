@@ -53,13 +53,12 @@ class ContaBancaria: ObservableObject {
     // MARK: - Transferir
     // TODO 3: Completo
     func transferir(valor: Double, destino: ContaBancaria) {
-		if valor > 0 && saldo >= (valor + 5.0) {
-			saldo -= (valor + 5.0)
+		if valor > 0 && saldo >= valor {
+			saldo -= valor
 			destino.saldo += valor
 			
 			
 			transacoes.insert(Transaction(title: "Transferência Enviada", amount: valor, isExpense: true), at: 0)
-			transacoes.insert(Transaction(title: "Taxa de Transferência", amount: 5.0, isExpense: true), at: 0)
 			destino.transacoes.insert(Transaction(title: "Transferência Recebida", amount: valor, isExpense: false), at: 0)
 		}
     }

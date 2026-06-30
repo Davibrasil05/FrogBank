@@ -27,18 +27,12 @@ class ContaPoupanca: ContaBancaria {
 	
 	
 	// MARK: - Sacar (Override - Polimorfismo)
-	// TODO 5: Faça override da função sacar(valor: Double)
-	// Na poupança NÃO tem taxa. Só verifique se saldo >= valor
-	// Atualmente a função dispara um alerta informando que a classe está incompleta.
+	// TODO 5: Completo
 	override func sacar(valor: Double) {
 		
-		
-		
-		
-		//Pode apagar quando fizer o método
-		mensagemAlerta = "Sacar (Poupança): Não funciona pois a classe está incompleta! Implemente o TODO 5."
-		mostrarAlertaIncompleto = true
-		
+		if saldo >= valor {
+			saldo -= valor
+		}
 		
 		//Serve apenas para visualização
 		transacoes.insert(Transaction(title: "Saque", amount: valor, isExpense: true), at: 0)
