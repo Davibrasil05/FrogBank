@@ -17,15 +17,13 @@ struct Transaction: Identifiable {
 
 class ContaBancaria: ObservableObject {
     
-	//Encapsulamento com private(set), significa que apenas a classe pode alterar os atributos de dentro
-    // (Comentado o private(set) temporariamente para a ContaPoupança conseguir alterar o saldo)
-    @Published /*private(set)*/ var saldo: Double = 0.0
+	//Encapsulamento com internal(set), significa que apenas a classe pode alterar os atributos de dentro
+    @Published var saldo: Double = 0.0
     
     @Published var transacoes: [Transaction] = []
     
     @Published var nome: String = "Conta Corrente"
-    
-    // Isso é apenas para função de alerta
+	
     @Published var mostrarAlertaIncompleto: Bool = false
     @Published var mensagemAlerta: String = ""
     
@@ -34,12 +32,9 @@ class ContaBancaria: ObservableObject {
 	// Se valor > 0, adicione ao saldo
 	// Atualmente a função dispara um alerta informando que a classe está incompleta.
 	func depositar(valor: Double) {
-		// mensagemAlerta = "Depositar: Não funciona pois a classe está incompleta! Implemente o TODO 3."
-		// mostrarAlertaIncompleto = true
-        if valor > 0 {
-            saldo += valor
-            transacoes.insert(Transaction(title: "Depósito", amount: valor, isExpense: false), at: 0)
-        }
+		mensagemAlerta = "Depositar: Não funciona pois a classe está incompleta! Implemente o TODO 3."
+		mostrarAlertaIncompleto = true
+		
 	}
     
     // MARK: - Sacar
@@ -48,14 +43,11 @@ class ContaBancaria: ObservableObject {
     // Só saque se saldo >= valorComTaxa
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     func sacar(valor: Double) {
-        // mensagemAlerta = "Sacar: Não funciona pois a classe está incompleta! Implemente o TODO 2."
-        // mostrarAlertaIncompleto = true
-        let valorComTaxa = valor + 5.0
-        if saldo >= valorComTaxa && valor > 0 {
-            saldo -= valorComTaxa
-            transacoes.insert(Transaction(title: "Saque", amount: valor, isExpense: true), at: 0)
-            transacoes.insert(Transaction(title: "Taxa de Saque", amount: 5.0, isExpense: true), at: 0)
-        }
+        mensagemAlerta = "Sacar: Não funciona pois a classe está incompleta! Implemente o TODO 2."
+		mostrarAlertaIncompleto = true
+		
+		transacoes.insert(Transaction(title: "Saque", amount: valor, isExpense: true), at: 0)
+		transacoes.insert(Transaction(title: "Taxa de Saque", amount: 5.0, isExpense: true), at: 0)
     }
     
     // MARK: - Transferir
@@ -63,14 +55,9 @@ class ContaBancaria: ObservableObject {
     // Use sacar() desta conta e depositar() na conta destino
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     func transferir(valor: Double, destino: ContaBancaria) {
-        // mensagemAlerta = "Transferir: Não funciona pois a classe está incompleta! Implemente o TODO 3."
-        // mostrarAlertaIncompleto = true
-        let valorComTaxa = valor + 5.0
-        if saldo >= valorComTaxa && valor > 0 {
-            self.sacar(valor: valor)
-            destino.depositar(valor: valor)
-            // A transação de transferência pode ser registrada separadamente, mas aqui o sacar e depositar já criam registros
-        }
+        mensagemAlerta = "Transferir: Não funciona pois a classe está incompleta! Implemente o TODO 3."
+        mostrarAlertaIncompleto = true
+
     }
     
 }
