@@ -20,8 +20,14 @@ class ContaPoupanca: ContaBancaria {
     // rendimento = saldo * 0.01, depois deposite o rendimento
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     func renderJuros() {
-        mensagemAlerta = "Render Juros: Não funciona pois a classe está incompleta! Implemente o TODO 4."
-        mostrarAlertaIncompleto = true
+        // mensagemAlerta = "Render Juros: Não funciona pois a classe está incompleta! Implemente o TODO 4."
+        // mostrarAlertaIncompleto = true
+        let rendimento = saldo * 0.01
+        if rendimento > 0 {
+            // Em vez de chamar o depositar() padrão, vamos adicionar manualmente para ter um título melhor
+            saldo += rendimento
+            transacoes.insert(Transaction(title: "Rendimento", amount: rendimento, isExpense: false), at: 0)
+        }
     }
     
     // MARK: - Sacar (Override - Polimorfismo)
@@ -29,7 +35,11 @@ class ContaPoupanca: ContaBancaria {
     // Na poupança NÃO tem taxa. Só verifique se saldo >= valor
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     override func sacar(valor: Double) {
-        mensagemAlerta = "Sacar (Poupança): Não funciona pois a classe está incompleta! Implemente o TODO 5."
-        mostrarAlertaIncompleto = true
+        // mensagemAlerta = "Sacar (Poupança): Não funciona pois a classe está incompleta! Implemente o TODO 5."
+        // mostrarAlertaIncompleto = true
+        if saldo >= valor && valor > 0 {
+            saldo -= valor
+            transacoes.insert(Transaction(title: "Saque", amount: valor, isExpense: true), at: 0)
+        }
     }
 }

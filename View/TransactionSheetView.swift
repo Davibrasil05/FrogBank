@@ -15,7 +15,6 @@ struct TransactionSheetView: View {
     let type: TransactionType
     
     @State private var amountString: String = ""
-    @State private var showError: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -35,15 +34,21 @@ struct TransactionSheetView: View {
                             .font(.system(size: 40, weight: .bold))
                             .keyboardType(.decimalPad)
                             .foregroundColor(.frogDarkGreen)
+                            .onChange(of: amountString) { newValue in
+                                if newValue.count > 6 {
+                                    amountString = String(newValue.prefix(6))
+                                }
+                            }
                     }
                     .padding()
                     .background(Color.frogLightGreen.opacity(0.3))
                     .cornerRadius(16)
                     
-                    if showError {
-                        Text(type == .deposit ? "Valor inválido." : "Saldo insuficiente ou valor inválido.")
+                    if hasInsufficientBalance {
+                        Text("Saldo insuficiente.")
                             .font(.subheadline)
                             .foregroundColor(.red)
+                            .padding(.top, 4)
                     }
                 }
                 .padding(.horizontal)
@@ -51,26 +56,24 @@ struct TransactionSheetView: View {
                 Spacer()
                 
                 Button(action: {
-                    let formattedString = amountString.replacingOccurrences(of: ",", with: ".")
-                    if let amount = Double(formattedString), amount > 0 {
+                    if let amount = parsedAmount, amount > 0 {
                         if type == .deposit {
                             conta.depositar(valor: amount)
                         } else {
                             conta.sacar(valor: amount)
                         }
                         dismiss()
-                    } else {
-                        showError = true
                     }
                 }) {
                     Text("Confirmar")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.frogDarkGreen)
+                        .background(isButtonEnabled ? Color.frogDarkGreen : Color.gray.opacity(0.5))
                         .foregroundColor(.white)
                         .cornerRadius(12)
                 }
+                .disabled(!isButtonEnabled)
                 .padding(.horizontal)
                 .padding(.bottom)
             }
@@ -86,5 +89,30 @@ struct TransactionSheetView: View {
                 }
             }
         }
+    }
+    
+    // MARK: - Validation Helpers
+    
+    private var parsedAmount: Double? {
+        let formattedString = amountString.replacingOccurrences(of: ",", with: ".")
+        return Double(formattedString)
+    }
+    
+    private var hasInsufficientBalance: Bool {
+        guard type == .withdraw, let amount = parsedAmount, amount > 0 else { return false }
+        if conta is ContaPoupanca {
+            return amount > conta.saldo
+        } else {
+            // Conta Corrente (ContaBancaria base) tem taxa de 5.0
+            return amount > (conta.saldo - 5.0)
+        }
+    }
+    
+    private var isButtonEnabled: Bool {
+        guard let amount = parsedAmount, amount > 0 else { return false }
+        if type == .withdraw {
+            return !hasInsufficientBalance
+        }
+        return true
     }
 }
