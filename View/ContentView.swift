@@ -15,7 +15,31 @@ extension Color {
 }
 
 struct ContentView: View {
-    @StateObject var conta = ContaPoupanca()
+    @StateObject var contaCorrente = ContaBancaria()
+    @StateObject var contaPoupanca = ContaPoupanca()
+    
+    var body: some View {
+        TabView {
+            AccountView(conta: contaCorrente, title: "Conta Corrente")
+                .tabItem {
+                    Label("Corrente", systemImage: "building.columns.fill")
+                }
+            
+            AccountView(conta: contaPoupanca, title: "Conta Poupança")
+                .tabItem {
+                    Label("Poupança", systemImage: "leaf.fill")
+                }
+        }
+        .tint(.frogDarkGreen)
+    }
+}
+
+struct AccountView: View {
+    @ObservedObject var conta: ContaBancaria
+    let title: String
+    
+    @State private var showingTransactionSheet = false
+    @State private var transactionType: TransactionType = .deposit
     
     var body: some View {
         NavigationStack {
@@ -32,7 +56,7 @@ struct ContentView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.frogLightGreen)
                         
-                        Text("Conta Corrente")
+                        Text(title)
                             .font(.caption2)
                             .fontWeight(.semibold)
                             .padding(.horizontal, 8)
@@ -50,20 +74,22 @@ struct ContentView: View {
                     HStack {
                         Spacer()
                         QuickActionButton(icon: "plus.circle.fill", title: "Depositar") {
-                            conta.depositar(valor: 100.0)
+                            transactionType = .deposit
+                            showingTransactionSheet = true
                         }
                         Spacer()
                         QuickActionButton(icon: "minus.circle.fill", title: "Sacar") {
-                            conta.sacar(valor: 50.0)
+                            transactionType = .withdraw
+                            showingTransactionSheet = true
                         }
-                        Spacer()
-                        QuickActionButton(icon: "arrow.left.arrow.right.circle.fill", title: "Transferir") {
-                            // TODO
+
+                        if let poupanca = conta as? ContaPoupanca {
+                            Spacer()
+                            QuickActionButton(icon: "chart.line.uptrend.xyaxis", title: "Rendimento") {
+                                poupanca.renderJuros()
+                            }
                         }
-                        Spacer()
-                        QuickActionButton(icon: "minus.circle.fill", title: "Rendimento") {
-                            conta.renderJuros()
-                        }
+                        
                         Spacer()
                     }
                     .padding(.vertical, 4)
@@ -79,6 +105,9 @@ struct ContentView: View {
             .navigationTitle("FrogBank")
             .background(Color(UIColor.systemGroupedBackground))
             .scrollContentBackground(.hidden)
+            .sheet(isPresented: $showingTransactionSheet) {
+                TransactionSheetView(conta: conta, type: transactionType)
+            }
         }
     }
 }

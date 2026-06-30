@@ -11,21 +11,27 @@ import Combine
 class ContaBancaria: ObservableObject {
     @Published var saldo: Double = 1000.00
     @Published var nome: String = "Conta de Exemplo"
-    func depositar(valor: Double) {
+    @discardableResult
+    func depositar(valor: Double) -> Bool {
         // TODO: Implementar lógica na aula
         if valor > 0 {
            saldo += valor
+           return true
         }
+        return false
     }
     
-    func sacar(valor: Double) {
+    @discardableResult
+    func sacar(valor: Double) -> Bool {
         // TODO: Implementar lógica na aula
         let valorComTaxa = valor + 5.0
         
-        if valor >= valorComTaxa {
+        if saldo >= valorComTaxa {
             saldo -= valorComTaxa
+            return true
         }
         
+        return false
     }
 }
 

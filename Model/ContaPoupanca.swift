@@ -14,9 +14,12 @@ class ContaPoupanca: ContaBancaria {
         depositar(valor: rendimento)
     }
     
-    override func sacar(valor: Double) {
+    @discardableResult
+    override func sacar(valor: Double) -> Bool {
         if saldo >= valor {
             saldo -= valor
+            return true
         }
+        return false
     }
 }
