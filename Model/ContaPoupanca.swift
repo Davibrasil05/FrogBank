@@ -16,23 +16,13 @@ class ContaPoupanca: ContaBancaria {
 	}
 	
 	// MARK: - Render Juros
-	// TODO 4: Implemente a lógica da função renderJuros()
-	// rendimento = saldo * 0.01, depois deposite o rendimento
-	// Atualmente a função dispara um alerta informando que a classe está incompleta.
+	// TODO 4: Completa
 	func renderJuros() {
 		
+		let rendimento: Double = saldo * 0.01
+		saldo += rendimento
+		transacoes.insert(Transaction(title: "Rendimento", amount: rendimento, isExpense: false), at: 0)
 		
-		
-		
-		
-		
-		//Pode apagar quando fizer o método
-		mensagemAlerta = "Render Juros: Não funciona pois a classe está incompleta! Implemente o TODO 4."
-		mostrarAlertaIncompleto = true
-		
-		
-		// *DESCOMENTE ESSA LINHA APÓS O MÉTODO CRIADO*
-		//transacoes.insert(Transaction(title: "Rendimento", amount: rendimento, isExpense: false), at: 0)
 	}
 	
 	

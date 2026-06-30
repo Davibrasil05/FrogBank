@@ -150,7 +150,7 @@ struct TransactionRow: View {
 			Text(amount)
 				.font(.body)
 				.fontWeight(.medium)
-				.foregroundColor(isExpense ? .primary : .frogMediumGreen)
+				.foregroundColor(isExpense ? Color.red.opacity(0.8) : .frogMediumGreen)
 		}
 	}
 }

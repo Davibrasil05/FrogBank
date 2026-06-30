@@ -112,7 +112,7 @@ struct TransactionSheetView: View {
     
     private var isButtonEnabled: Bool {
         guard let amount = parsedAmount, amount > 0 else { return false }
-        if type == .withdraw {
+        if type == .withdraw || type == .transfer {
             return !hasInsufficientBalance
         }
         return true
