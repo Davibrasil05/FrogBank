@@ -43,12 +43,11 @@ class ContaBancaria: ObservableObject {
     // Atualmente a função dispara um alerta informando que a classe está incompleta.
     func sacar(valor: Double) {
 		
+		var valorComTaxa: Double = valor + 5.0
 		
-		
-		
-		//Pode apagar quando fizer o método
-        mensagemAlerta = "Sacar: Não funciona pois a classe está incompleta! Implemente o TODO 2."
-		mostrarAlertaIncompleto = true
+		if saldo >= valorComTaxa {
+			saldo -= valorComTaxa
+		}
 		
 		//Serve apenas para visualização
 		transacoes.insert(Transaction(title: "Saque", amount: valor, isExpense: true), at: 0)
